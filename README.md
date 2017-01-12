@@ -2,6 +2,12 @@
 
 Outil permettant de créer un serveur web à partir de python et d'éxécuter des requêtes pour trouver des cours similaires à un cours en particulier.
 
+## Obtention de cet outil ##
+
+```shell
+git clone https://github.com/ma-dubois/INF.git
+```
+
 ## Introduction ##
 
 Cet outil calcule la similarité du contenu du fichier <COURS>.txt avec tous les documents présents dans le dossier PolyHEC. Les 10 documents présentant la plus grande similarité sont retournés. Les signes de ponctuation (.,;:!?) sont ne sont pas considéré comme des mots et sont retirés. De plus, il est possible de radicaliser les mots et de supprimer les mots vides tels que 'de'. Dans le fichier elementComparison.py, on definiera les variables <stemming> et <stopWords> a True/False pour activer/désactiver la radicalisation et la suppression des mots vides respectivement.
