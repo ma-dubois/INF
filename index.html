@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TEST</title>
+<script src="http://code.jquery.com/jquery-latest.min.js" ></script>
+
+
+<style type="text/css" media="screen">
+body{
+margin: 0px;
+background-color: #ECEAE0;
+}
+.customForm{
+    text-align: center;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.ma{
+list-style-type:none;
+text-align: center;
+margin: 0px;
+}
+
+.title{
+text-align: center;
+font-size: x-large;
+color: #63AA9C;
+}
+
+.text{
+text-align: justify;
+padding-left: 25%;
+padding-right: 25%;
+}
+
+.categoryTitle{
+text-align: center;
+font-size: xx-large;
+margin: 0px;
+color: #E9633B;
+padding-top: 2%;
+padding-bottom: 2%;
+}
+
+.requestBox{
+padding: 0px;
+margin: 0px;
+}
+
+.resultBox{
+padding: 0px;
+margin: 0px;
+}
+
+</style>
+
+
+
+</head>
+<body>
+
+<!-- Formulaire -->
+<form class="customForm" action="/" id="searchForm">
+<input type="text" id="courseInputField" placeholder="Inscrivez le sigle ici" style="font-size: x-large; text-align:center">
+</form>
+
+<script>
+//Lorsque la touche de retour est pressee
+$('#courseInputField').keypress(function (e) {
+
+var key = e.which;
+if(key == 13)  // Touche de retour
+{
+
+  // Prevenir le comportement par defaut
+  event.preventDefault();
+
+
+  //lire la valeur ecrite
+  var courseInput = document.getElementById("courseInputField").value;
+  var object = {"cours":courseInput};
+
+    //Animation
+    $( "#result" ).fadeOut( 500 );
+
+    //Envoyer linfo par une methode post de jquery a localhost port 8081
+    $.post("http://localhost:8081",
+    JSON.stringify(object),
+    function(data){
+
+                //Fonction de lecture de la reponse JSON
+                var response = $.parseJSON(data);
+
+                //Nettoyage des valeurs
+                $("#requestArray").empty();
+                $("#resultArray").empty();
+
+                //En cas de requete invalide
+                if(response['request'].title == "requete invalide"){
+                $( "#requestArray" ).append( "<li id='element0'><div class='title'>Requête invalide</div></li>" );
+                }
+
+                //Sinon la mise en forme est lancee
+                else{
+
+                //Mise en forme de la requete
+                var title = "<div class='title'>"+response['request'].title+"</div>";
+                var description = "<div class='text'><p>"+response['request'].description+"</p></div>";
+                $( "#requestArray" ).append( "<li id='element0'>"+title+" "+description+"</li>" );
+
+                //Mise en forme des elements de la reponse
+                for (element in response['result']){
+                var title = "<div class='title'>"+response['result'][element].id+" - "+response['result'][element].title+"</div>";
+                var description = "<div class='text'><p>"+response['result'][element].description+"</p></div>";
+                $( "#resultArray" ).append( "<li id='element"+element+"'>"+title+" "+description+"</li>" );
+                }
+                }
+
+                //On reaffiche la div
+                $( "#result" ).fadeIn( 500 );
+
+            }
+            );
+
+  }
+  });
+  </script>
+
+<!-- Page -->
+<div id="result" style="display: none; padding: 0;">
+<div class='requestBox'>
+<div class='categoryTitle'>Requête</div>
+<lu class='ma' id='requestArray'></lu>
+</div>
+<div class='resultBox'>
+<div class='categoryTitle'>Résultats</div>
+<lu class='ma' id='resultArray'></lu>
+</div>
+</div>
+</body>
+</html>
