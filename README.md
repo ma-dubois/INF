@@ -36,7 +36,7 @@ python serveur.py
 Cette commande amorcera les calculs de base et lancera le serveur accessible sur localhost au port 8081. 
 
 
-2. Du côté client, dans un navigateur compatible avec jQuery (), lancer la page [http://localhost:8081/index.html](http://localhost:8081/index.html)
+2. Du côté client, dans un navigateur compatible avec [jQuery](www.jquery.com), lancer la page [http://localhost:8081/index.html](http://localhost:8081/index.html)
 
 3. Entrer le numéro d'un cours (par exemple BIA3510) dans l'invite et appuyer sur la touche Enter du clavier. Le calcul se lance sur le serveur et le résultat de la requête sera affiché dans le navigateur du client.
 
